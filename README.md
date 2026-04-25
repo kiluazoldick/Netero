@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚡ Netero - Boilerplate Provider
 
-## Getting Started
+**Netero** est une plateforme qui fournit des boilerplates Next.js prêts à l'emploi pour accélérer vos projets. Paiement unique, templates premium, et CLI simple.
 
-First, run the development server:
+## ✨ Fonctionnalités
+
+- 🔐 **Authentification** - Email, Google, GitHub avec Supabase
+- 🎨 **Design moderne** - Thème dark/light avec accent or (#FFD700)
+- 📦 **Templates payants** - Accès unique à vie pour débloquer tous les templates
+- 🛠️ **CLI intégrée** - `npx netero download <template>` 
+- 🚀 **Performant** - Next.js 14 avec App Router et Turbopack
+
+## 🛠️ Stack Technique
+
+| Technologie | Rôle |
+|------------|------|
+| Next.js 14 | Framework React (App Router) |
+| TypeScript | Typage statique |
+| Tailwind CSS | Styling utilitaire |
+| shadcn/ui | Composants UI |
+| Supabase | Auth + Base de données |
+| Stripe | Paiements (à venir) |
+
+## 🚀 Installation
 
 ```bash
+# Cloner le projet
+git clone https://github.com/kiluazoldick/Netero.git
+cd Netero
+
+# Installer les dépendances
+npm install
+
+# Configurer les variables d'environnement
+cp .env.local.example .env.local
+# Remplir les variables avec tes clés Supabase
+
+# Lancer le serveur de développement
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📁 Structure du projet
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+netero-platform/
+├── app/
+│   ├── (auth)/          # Pages d'authentification
+│   │   ├── login/
+│   │   ├── register/
+│   │   └── callback/
+│   ├── (dashboard)/     # Pages privées
+│   │   └── dashboard/
+│   ├── layout.tsx       # Layout principal
+│   └── page.tsx         # Landing page
+├── components/
+│   ├── landing/         # Composants de la landing
+│   └── layout/          # Header, Footer, ThemeProvider
+├── lib/
+│   └── supabase/        # Clients Supabase
+├── middleware.ts        # Protection des routes
+└── public/              # Assets statiques
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔑 Variables d'environnement
 
-## Learn More
+```env
+NEXT_PUBLIC_SUPABASE_URL=votre_url_supabase
+NEXT_PUBLIC_SUPABASE_ANON_KEY=votre_clé_anon
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🎨 Palette de couleurs
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Or principal** : `#FFD700`
+- **Noir** : `#000000`
+- **Blanc** : `#FFFFFF`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📦 Commandes disponibles
 
-## Deploy on Vercel
+| Commande | Description |
+|----------|-------------|
+| `npm run dev` | Lance le serveur de développement |
+| `npm run build` | Build de production |
+| `npm run start` | Lance le serveur de production |
+| `npm run lint` | Vérifie le code avec ESLint |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧪 Roadmap
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [x] Authentification (Email, Google, GitHub)
+- [x] Dashboard utilisateur
+- [x] Thème dark/light
+- [ ] Paiement Stripe
+- [ ] Templates premium
+- [ ] CLI `npx netero`
+- [ ] Admin panel
+
+## 🤝 Contribution
+
+1. Fork le projet
+2. Crée ta branche (`git checkout -b feature/amazing-feature`)
+3. Commit tes changements (`git commit -m 'feat: add amazing feature'`)
+4. Push sur la branche (`git push origin feature/amazing-feature`)
+5. Ouvre une Pull Request
+
+## 📝 License
+
+MIT - Créé avec ❤️ par [kiluazoldick](https://github.com/kiluazoldick)
+
+## 🔗 Liens
+
+- [GitHub Repository](https://github.com/kiluazoldick/Netero)
+
+---
