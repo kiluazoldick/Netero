@@ -1,0 +1,151 @@
+'use client'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { FaGithub } from 'react-icons/fa'
+import { FcGoogle } from 'react-icons/fc'
+import { createClient } from '@/lib/supabase/client'
+
+export default function RegisterPage() {
+  const router = useRouter()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  const supabase = createClient()
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (password !== confirmPassword) {
+      setError('Les mots de passe ne correspondent pas')
+      return
+    }
+    
+    setLoading(true)
+    setError('')
+
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      },
+    })
+
+    if (error) {
+      setError(error.message)
+    } else {
+      router.push('/login?message=Vérifiez votre email pour confirmer votre inscription')
+    }
+    setLoading(false)
+  }
+
+  const handleOAuth = async (provider: 'google' | 'github') => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    })
+    if (error) setError(error.message)
+  }
+
+  return (
+    <div className="min-h-screen flex items-center justify-center px-4 pt-20">
+      <Card className="w-full max-w-md">
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl">Inscription</CardTitle>
+          <CardDescription>
+            Créez votre compte pour accéder aux templates
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="vous@exemple.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Mot de passe</Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirm-password">Confirmer le mot de passe</Label>
+              <Input
+                id="confirm-password"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </div>
+            {error && <p className="text-sm text-red-500">{error}</p>}
+            <Button 
+              type="submit" 
+              className="w-full bg-[#FFD700] text-black hover:bg-[#FFD700]/90"
+              disabled={loading}
+            >
+              {loading ? 'Inscription...' : "S'inscrire"}
+            </Button>
+          </form>
+
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-[#FFD700]/20"></div>
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-white dark:bg-black px-2 text-gray-500">Ou continuer avec</span>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Button 
+              variant="outline" 
+              className="w-full border-[#FFD700]/30 hover:bg-[#FFD700]/10"
+              onClick={() => handleOAuth('github')}
+            >
+              <FaGithub className="mr-2 h-4 w-4" />
+              GitHub
+            </Button>
+            <Button 
+              variant="outline" 
+              className="w-full border-[#FFD700]/30 hover:bg-[#FFD700]/10"
+              onClick={() => handleOAuth('google')}
+            >
+              <FcGoogle className="mr-2 h-4 w-4" />
+              Google
+            </Button>
+          </div>
+        </CardContent>
+        <CardFooter className="flex justify-center">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Déjà un compte ?{' '}
+            <Link href="/login" className="text-[#FFD700] hover:underline">
+              Se connecter
+            </Link>
+          </p>
+        </CardFooter>
+      </Card>
+    </div>
+  )
+}
