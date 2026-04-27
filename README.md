@@ -31,8 +31,6 @@ cd Netero
 # Installer les dépendances
 npm install
 
-# Configurer les variables d'environnement
-cp .env.local.example .env.local
 # Remplir les variables avec tes clés Supabase
 
 # Lancer le serveur de développement
