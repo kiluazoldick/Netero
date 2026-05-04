@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" className={cn("font-sans", geist.variable)} suppressHydrationWarning>
+    <html lang="fr" className={cn("font-sans overflow-x-hidden", geist.variable)} suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}

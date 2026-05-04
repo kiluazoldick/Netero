@@ -28,9 +28,9 @@ export default function Realisation() {
           {RealisationList.map((project, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-[#010101] rounded-xl shadow-md  rounded-t-xl cursor-pointer"
+              className=" px-2 py-2 border border-[#FFD700] bg-white dark:bg-[#010101] rounded-xl shadow-md  rounded-t-xl cursor-pointer"
             >
-              <div className="relative h-50">
+              <div className="relative h-50 ">
                 <Image
                   src={project.image}
                   alt={project.title}
@@ -38,7 +38,7 @@ export default function Realisation() {
                   className="object-cover  rounded-t-xl cursor-pointer"
                 />
 
-                <span className="cursor-pointer absolute top-4 right-4 bg-[#00B3C4] dark:text-black text-white text-xs font-semibold px-4 py-1 rounded-full">
+                <span className="cursor-pointer absolute top-4 right-4 bg-[#FFD700] dark:text-black text-white text-xs font-semibold px-4 py-1 rounded-full">
                   {project.category}
                 </span>
               </div>
@@ -50,7 +50,7 @@ export default function Realisation() {
 
                 <a
                   href="#"
-                  className="text-cyan-600 font-bold text-[14px] flex items-center gap-3"
+                  className="text-[#FFD700] font-bold text-[14px] flex items-center gap-3"
                 >
                   Voir le projet <ExternalLink /> 
                 </a>

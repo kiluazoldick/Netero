@@ -5,60 +5,31 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { motion, AnimatePresence } from "framer-motion"
-import {
-  useSidebar,
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem
-} from "@/components/ui/sidebar"
-
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from "@/components/ui/tooltip"
-
-import {
-  LayoutDashboard,
-  Layers,
-  CreditCard,
-  User2,
-  LogOut,
-  Bell,
-  Sparkles,
-  ChevronUp,
-  ChevronDown,
-  Sun,
-  Moon
-} from "lucide-react"
-
+import { useSidebar, Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar"
+import { LayoutDashboard, Layers, CreditCard, User2, LogOut, Bell, Sparkles, ChevronUp, ChevronDown, Sun, Moon } from "lucide-react"
 import { cn } from "@/lib/utils"
+
+type AppSidebarProps = {
+  user: any
+  isPremium: boolean
+}
 
 const navItems = [
   { label: "Dashboard", href: "/bord", icon: LayoutDashboard },
-  { label: "Templates", href: "/dashboard/templates", icon: Layers },
-  { label: "Go Premium", href: "/pricing", icon: CreditCard },
-  { label: "Log Out", href: "/dashboard/logout", icon: LogOut },
+  { label: "Templates", href: "/bord/templates", icon: Layers },
+  { label: "Go Premium", href: "/bord/pricing", icon: CreditCard },
 ]
 
-export function AppSidebar() {
+export function AppSidebar({ user, isPremium }: AppSidebarProps) {
   const [open, setOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-
   const pathname = usePathname()
   const { state } = useSidebar()
   const { theme, setTheme } = useTheme()
 
-  const [mounted, setMounted] = useState(false)
   const collapsed = state === "collapsed"
-
-  const isPremium = false
-  const username = "username"
+  const username = user?.user_metadata?.full_name || user?.email || "User"
 
   useEffect(() => setMounted(true), [])
 
@@ -66,184 +37,98 @@ export function AppSidebar() {
     if (collapsed) setOpen(false)
   }, [collapsed])
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        setOpen(false)
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+  const handleLogout = async () => {
+    await fetch('/signOut', { method: 'POST' })
+    window.location.href = '/'
+  }
 
   return (
-    <TooltipProvider>
-      <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon">
 
-        {/* HEADER */}
-        <SidebarHeader className="py-4 mb-6">
-          <div className="flex items-center justify-between px-1">
-
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg flex-shrink-0 bg-yellow-400" />
-              <span className="text-3xl font-bold group-data-[state=collapsed]:hidden text-yellow-400">
-                Netero
-              </span>
-            </div>
-
-            {/* THEME TOGGLE */}
-            <Tooltip>
-              <TooltipTrigger>
-                <button
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="group-data-[state=collapsed]:hidden p-2 rounded-md hover:bg-muted transition"
-                >
-                  {mounted ? (
-                    theme === "dark" ? <Sun size={18} /> : <Moon size={18} />
-                  ) : (
-                    <Moon size={18} />
-                  )}
-                </button>
-              </TooltipTrigger>
-
-              <TooltipContent side="right">
-                {mounted && theme === "dark" ? "Light mode" : "Dark mode"}
-              </TooltipContent>
-            </Tooltip>
-
+      {/* HEADER */}
+      <SidebarHeader className="py-4 mb-1">
+        <div className="flex justify-between px-1">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-yellow-400" />
+            <span className="text-3xl font-bold group-data-[state=collapsed]:hidden text-yellow-400">
+              Netero
+            </span>
           </div>
-          <hr className="mt-3 border-border" />
-        </SidebarHeader>
 
-        {/* NAV */}
-        <SidebarContent>
-          <SidebarMenu className="space-y-3 px-1 mt-4">
+          <div
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="group-data-[state=collapsed]:hidden p-2 cursor-pointer"
+          >
+            {mounted && (theme === "dark" ? <Sun size={18} /> : <Moon size={18} />)}
+          </div>
+        </div>
+      </SidebarHeader>
 
-            {navItems.map(({ label, href, icon: Icon }) => {
-              const isActive = pathname === href
+        <hr />
 
-              return (
-                <SidebarMenuItem key={label}>
-                  <Tooltip>
+      {/* NAV */}
+      <SidebarContent>
+        <SidebarMenu className="space-y-3 pt-6 px-1 mt-4">
+          {navItems.map(({ label, href, icon: Icon }) => {
+            const isActive = pathname === href
 
-                    {/* IMPORTANT FIX: asChild */}
-                    <TooltipTrigger asChild>
-                      <SidebarMenuButton
-                        className={cn(
-                          "py-5 text-lg gap-4 h-auto w-full",
-                          isActive
-                            ? "bg-muted text-foreground font-semibold"
-                            : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
-                        )}
-                      >
-                        <Link href={href} className="flex items-center gap-4">
-                          <Icon size={26} />
-                          <span className="group-data-[state=collapsed]:hidden">
-                            {label}
-                          </span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </TooltipTrigger>
+            return (
+              <SidebarMenuItem key={label}>
+                <Link
+                  href={href}
+                  className={cn(
+                    "flex items-center gap-4 px-3 py-3 rounded-md",
+                    isActive ? "bg-muted font-semibold" : "hover:bg-muted/60"
+                  )}
+                >
+                  <Icon size={22} />
+                  <span className="group-data-[state=collapsed]:hidden">{label}</span>
+                </Link>
+              </SidebarMenuItem>
+            )
+          })}
+        </SidebarMenu>
+      </SidebarContent>
 
-                    {collapsed && (
-                      <TooltipContent side="right">{label}</TooltipContent>
-                    )}
+      {/* FOOTER */}
+      <SidebarFooter ref={ref} className="relative">
+        <div
+          onClick={() => !collapsed && setOpen(!open)}
+          className="flex justify-between p-3 cursor-pointer"
+        >
+          <div className="flex items-center gap-3">
+            <User2 size={20} />
+            <div className="group-data-[state=collapsed]:hidden">
+              <p className="text-sm font-medium">{username}</p>
+              <p className="text-xs">{isPremium ? "Premium" : "Gratuit"}</p>
+            </div>
+          </div>
 
-                  </Tooltip>
-                </SidebarMenuItem>
-              )
-            })}
+          {open ? <ChevronDown size={16} /> : <ChevronUp size={16} />}
+        </div>
 
-          </SidebarMenu>
-        </SidebarContent>
+        <AnimatePresence>
+          {open && !collapsed && (
+            <motion.div className="absolute bottom-full mb-2 left-0 w-full bg-white dark:bg-background border rounded-xl p-2">
+              
+              {!isPremium && (
+                <Link href="bord/pricing" className="flex gap-2 px-3 py-2 hover:bg-muted">
+                  <Sparkles size={16} /> Upgrade
+                </Link>
+              )}
 
-        {/* FOOTER */}
-        <SidebarFooter className="relative" ref={ref}>
-
-          {/* USER BUTTON */}
-          <Tooltip>
-
-            <TooltipTrigger asChild>
-              <button
-                onClick={() => !collapsed && setOpen(!open)}
-                className="w-full flex items-center justify-between p-3 rounded-md hover:bg-muted transition"
+              <div
+                onClick={handleLogout}
+                className="flex gap-2 px-3 py-2 text-red-500 hover:bg-red-50 cursor-pointer"
               >
-                <div className="flex items-center gap-3">
-                  <User2 size={22} />
+                <LogOut size={16} /> Log out
+              </div>
 
-                  <div className="text-left group-data-[state=collapsed]:hidden">
-                    <p className="text-sm font-medium">{username}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {isPremium ? "Premium" : "Gratuit"}
-                    </p>
-                  </div>
-                </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-                <span className="group-data-[state=collapsed]:hidden">
-                  {open ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
-                </span>
-              </button>
-            </TooltipTrigger>
-
-            {collapsed && (
-              <TooltipContent side="right">{username}</TooltipContent>
-            )}
-
-          </Tooltip>
-
-          {/* DROPDOWN */}
-          <AnimatePresence>
-            {open && !collapsed && (
-              <motion.div
-                initial={{ opacity: 0, x: -10, scale: 0.98 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -10, scale: 0.98 }}
-                transition={{ duration: 0.15 }}
-                className="absolute bottom-0 left-full ml-2 w-52 bg-background border rounded-xl shadow-lg p-2 space-y-1"
-              >
-
-                <SidebarMenuButton asChild className="py-2 gap-2">
-                  <Link href="/pricing" className="flex items-center gap-2">
-                    <Sparkles size={18} />
-                    Upgrade to Pro
-                  </Link>
-                </SidebarMenuButton>
-
-                <SidebarMenuButton asChild className="py-2 gap-2">
-                  <Link href="/dashboard/account" className="flex items-center gap-2">
-                    <User2 size={18} />
-                    Account
-                  </Link>
-                </SidebarMenuButton>
-
-                <SidebarMenuButton asChild className="py-2 gap-2">
-                  <Link href="/dashboard/billing" className="flex items-center gap-2">
-                    <CreditCard size={18} />
-                    Billing
-                  </Link>
-                </SidebarMenuButton>
-
-                <SidebarMenuButton asChild className="py-2 gap-2">
-                  <Link href="/dashboard/notifications" className="flex items-center gap-2">
-                    <Bell size={18} />
-                    Notifications
-                  </Link>
-                </SidebarMenuButton>
-
-                <div className="border-t my-1" />
-
-                <SidebarMenuButton className="py-2 gap-2 text-red-500 hover:text-red-600">
-                  <LogOut size={18} />
-                  Log out
-                </SidebarMenuButton>
-
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-        </SidebarFooter>
-      </Sidebar>
-    </TooltipProvider>
+      </SidebarFooter>
+    </Sidebar>
   )
 }

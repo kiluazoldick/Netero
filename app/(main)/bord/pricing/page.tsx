@@ -2,16 +2,13 @@
 
 import { useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase/client"
+import { PricingSection } from "@/components/layout/PricingSection"
 import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 
-export default function MainLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function PricingPage() {
   const [user, setUser] = useState<any>(null)
-  const [subscription, setSubscription] = useState<any>(null)
+  const [subscription, setSubscription] = useState<any>(null)  
+  const [loading, setLoading] = useState(true)
 
   const supabase = createClient()
 
@@ -30,26 +27,24 @@ export default function MainLayout({
         .maybeSingle()
 
       setSubscription(sub)
+       setLoading(false) 
     }
 
     load()
   }, [])
 
+    if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Chargement...</div>
+  }
   const isPremium = !!subscription
 
   return (
-    <SidebarProvider>
-      <div className="flex w-full min-h-screen">
+    <div className="flex">
+      <AppSidebar user={user} isPremium={isPremium} />
 
-        {/* ✅ ICI on passe les vraies données */}
-        <AppSidebar user={user} isPremium={isPremium} />
-
-        <main className="flex-1">
-          <SidebarTrigger />
-          {children}
-        </main>
-
-      </div>
-    </SidebarProvider>
+      <main>
+        <PricingSection />
+      </main>
+    </div>
   )
 }
