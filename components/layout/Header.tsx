@@ -26,10 +26,10 @@ export function Header() {
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
-            <Link href="/#templates" className="text-gray-600 dark:text-gray-300 hover:text-[#FFD700] transition-colors">
+            <Link href="/template" className="text-gray-600 dark:text-gray-300 hover:text-[#FFD700] transition-colors">
               Templates
             </Link>
-            <Link href="/#pricing" className="text-gray-600 dark:text-gray-300 hover:text-[#FFD700] transition-colors">
+            <Link href="/pricing" className="text-gray-600 dark:text-gray-300 hover:text-[#FFD700] transition-colors">
               Pricing
             </Link>
             <button

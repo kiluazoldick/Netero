@@ -14,8 +14,8 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4 text-gray-900 dark:text-white">Produit</h4>
             <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-              <li><Link href="/#templates" className="hover:text-[#FFD700]">Templates</Link></li>
-              <li><Link href="/#pricing" className="hover:text-[#FFD700]">Pricing</Link></li>
+              <li><Link href="/template" className="hover:text-[#FFD700]">Templates</Link></li>
+              <li><Link href="/pricing" className="hover:text-[#FFD700]">Pricing</Link></li>
             </ul>
           </div>
           <div>
