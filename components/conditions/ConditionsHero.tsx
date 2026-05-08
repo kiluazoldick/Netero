@@ -1,19 +1,31 @@
+import  {FileText} from 'lucide-react'
+
+
 export default function ConditionsHero() {
   return (
-    <div className="mb-12">
-      {/* Badge */}
-      <span className="inline-block  bg-white dark:bg-black text-[#FFD700] text-3xl px-4 py-1.5 rounded-full mb-6">
-        Conditions d'utilisation
-      </span>
+    <div className="text-center mb-12">
+      {/* Icône */}
+      <div className="flex justify-center mb-6">
+        <div className="w-14 h-14 rounded-full bg-yellow-100 border  flex items-center justify-center text-2xl">
+          <FileText className='w-10 h-10 text-yellow-800' />
+        </div>
+      </div>
 
       {/* Titre */}
-      <h1 className="text-4xl font-bold text-black dark:text-white mb-4">
-        Règles d'utilisation de Netero
+      <h1 className="text-4xl font-bold text-black dark:text-white mb-3">
+        Conditions Générales
       </h1>
 
       {/* Date */}
-      <p className="text-zinc-500 text-sm">
-        Dernière mise à jour : 1er mai 2025
+      <p className="text-zinc-500 text-sm mb-8">
+        Dernière mise à jour : 07/01/2026
+      </p>
+
+      {/* Introduction */}
+      <p className="text-zinc-400 text-sm leading-relaxed max-w-2xl mx-auto">
+        En utilisant Netero, vous acceptez les présentes conditions d'utilisation.
+        Nous vous invitons à les lire attentivement avant d'utiliser nos services
+        et nos templates premium.
       </p>
     </div>
   );

@@ -1,96 +1,98 @@
+
+import {Database,ShieldCheck,Blend,Gavel,Cookie,Settings} from 'lucide-react'
+
 const sections = [
   {
-    id: "collecte",
+    icon:<Database />,
     title: "Collecte des données",
-    content: "Nous collectons uniquement les données nécessaires au bon fonctionnement de Netero : nom, email, et informations de paiement.",
+    content: "Nous collectons uniquement les informations nécessaires à la fourniture de nos services : nom, email, téléphone, et informations relatives à votre projet. Ces données sont collectées avec votre consentement explicite lors de l'utilisation de nos formulaires de contact ou de demande de devis.",
     tags: ["Email", "Nom", "Paiement"],
     highlight: null,
   },
   {
-    id: "utilisation",
+    icon: <Settings />,
     title: "Utilisation des données",
-    content: "Vos données servent uniquement à gérer votre compte, traiter vos paiements et vous envoyer des mises à jour importantes.",
+    content: "Vos données personnelles sont utilisées exclusivement pour vous contacter, traiter vos demandes, vous fournir nos services et améliorer votre expérience utilisateur. Nous ne vendons ni ne louons vos informations à des tiers.",
     tags: [],
     highlight: "Nous ne vendons jamais vos données à des tiers.",
   },
   {
-    id: "cookies",
-    title: "Cookies",
-    content: "Netero utilise des cookies et des technologies similaires pour améliorer votre expérience sur la plateforme. Un cookie est un petit fichier texte qui est stocké sur votre appareil lorsque vous visitez un site Web.Types de cookies que nous utilisons : - Cookies essentiels: Ces cookies sont nécessaires au fonctionnement de la plateforme. Ils vous permettent, par exemple, de vous connecter à votre compte et de naviguer entre les pages. - Cookies analytiques: Ces cookies nous aident à comprendre comment les utilisateurs interagissent avec notre site, ce qui nous permet d'améliorer la plateforme. - Cookies marketing: Nous utilisons ces cookies pour vous montrer des publicités pertinentes sur la plateforme et sur d'autres sites. Gestion des cookies : Vous pouvez configurer votre navigateur pour refuser certains cookies ou tous les cookies. Toutefois, si vous désactivez les cookies, certaines fonctionnalités de Netero peuvent être affectées. Pour en savoir plus sur la gestion des cookies, veuillez consulter les paramètres de votre navigateur.",
-    tags: ["Essentiels", "Analytiques"],
+    icon: <ShieldCheck />,
+    title: "Protection des données",
+    content: "Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, modification, divulgation ou destruction. Nos serveurs sont sécurisés et nos communications sont chiffrées.",
+    tags: [],
     highlight: null,
   },
   {
-    id: "partage",
+    icon: <Blend />,
     title: "Partage des données",
-    content: "Vos données ne sont jamais vendues. Elles peuvent être partagées uniquement avec nos prestataires de paiement (Stripe) et d'authentification (Supabase).",
+    content: "Nous ne partageons vos données qu'avec des prestataires de services de confiance qui nous aident à exploiter notre site web et à mener nos activités, à condition que ces parties acceptent de garder ces informations confidentielles.",
     tags: ["Stripe", "Supabase"],
     highlight: null,
   },
   {
-    id: "droits",
+    icon:  <Gavel />,
     title: "Vos droits",
-    content: "Vous pouvez à tout moment demander l'accès, la modification ou la suppression de vos données en nous contactant directement.",
+    content: "Vous disposez d'un droit d'accès, de rectification, de suppression et de portabilité de vos données personnelles. Vous pouvez également vous opposer au traitement de vos données ou demander la limitation de ce traitement.",
     tags: [],
     highlight: "Vous avez le droit de supprimer votre compte et toutes vos données à tout moment.",
   },
   {
-    id: "contact",
-    title: "Contact",
-    content: "Pour toute question concernant vos données personnelles, contactez-nous à l'adresse suivante.",
-    tags: [],
-    highlight: "zoldickentreprisecontact@gmail.com",
-  },
-  {
-    id: "Sécurité",
-    title: "Stockage et Sécurité des Données",
-    content: "Nous prenons des mesures techniques et organisationnelles pour protéger vos données contre les accès non autorisés, la perte, la divulgation ou l'altération. Ces mesures incluent l'utilisation de cryptage SSL pour les transferts de données et le stockage sécurisé de vos informations.Vos informations sont stockées sur des serveurs sécurisés situés en France à Paris. Nous conservons vos données aussi longtemps que nécessaire pour vous fournir nos services, respecter nos obligations légales ou résoudre des litiges.",
-    tags: [],
-    highlight: "zoldickentreprisecontact@gmail.com",
+    icon: <Cookie />,
+    title: "Cookies",
+    content: "Notre site utilise des cookies pour améliorer votre expérience de navigation. Ces cookies nous aident à comprendre comment vous utilisez notre site et à personnaliser votre expérience. Vous pouvez configurer votre navigateur pour refuser les cookies.",
+    tags: ["Essentiels", "Analytiques"],
+    highlight: null,
   },
 ];
 
-interface Props {
-  active: string;
-}
-
-export default function PrivacyContent({ active }: Props) {
-  const section = sections.find((s) => s.id === active);
-
-  if (!section) return null;
-
+export default function PrivacyContent() {
   return (
-    <div className="border-l-2 border-l-[#FFD700] pl-5 transition-all duration-300">
-      {/* Titre */}
-      <h2 className="text-black dark:text-white font-semibold text-base mb-3">
-        {section.title}
-      </h2>
+    <div className="flex flex-col gap-4 mb-12">
+      {sections.map((section, index) => (
+        <div
+          key={index}
+          className="bg-white dark:bg-black border  rounded-2xl p-6 hover:border-[#FFD700] "
+        >
+          <div className="flex items-center gap-3 mb-3">
+            {/* Icône */}
+            <div className="w-10 h-10 rounded-xl  bg-yellow-100  border text-yellow-800 flex items-center justify-center text-lg shrink-0">
+              {section.icon}
+            </div>
 
-      {/* Texte */}
-      <p className="text-zinc-500 text-sm leading-relaxed">
-        {section.content}
-      </p>
+            {/* Titre */}
+            <h2 className="text-black dark:text-white font-semibold text-base">
+              {section.title}
+            </h2>
+          </div>
 
-      {/* Tags */}
-      {section.tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-3">
-          {section.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-xs text-[#FFD700] bg-white dark:bg-black px-3 py-1 rounded-full"
-            >
-              {tag}
-            </span>
-          ))}
+          {/* Texte */}
+          <p className="text-zinc-500 text-sm leading-relaxed">
+            {section.content}
+          </p>
+
+          {/* Tags */}
+          {section.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-3">
+              {section.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-xs text-[#FFD700] bg-white  dark:bg-black px-3 py-1 rounded-full"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Highlight */}
+          {section.highlight && (
+            <div className="mt-3 bg-white  dark:bg-black rounded-xl px-4 py-3">
+              <p className="text-yellow-600 text-sm">{section.highlight}</p>
+            </div>
+          )}
         </div>
-      )}
-
-      {/* Highlight */}
-      {section.highlight && (
-        <div className="mt-3 bg-white dark:bg-black  rounded-xl px-4 py-3">
-          <p className="text-yellow-600 text-sm">{section.highlight}</p>
-        </div>
-      )}
+      ))}
     </div>
   );
 }
