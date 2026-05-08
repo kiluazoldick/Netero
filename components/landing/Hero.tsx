@@ -31,13 +31,13 @@ export function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/#templates">
+            <Link href="/template">
               <button className="px-6 py-3 rounded-lg font-medium transition-all flex items-center gap-2 group hover:opacity-90" style={{ backgroundColor: '#FFD700', color: '#000000' }}>
                 Voir les templates
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </button>
             </Link>
-            <Link href="/#pricing">
+            <Link href="/pricing">
               <button className="px-6 py-3 rounded-lg font-medium transition-all border hover:bg-[#FFD700]/10" style={{ borderColor: '#FFD700', color: '#FFD700' }}>
                 Offre unique à 100 000 XAF
               </button>
