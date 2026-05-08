@@ -38,7 +38,7 @@ export function Header() {
             >
               {theme === 'dark' ? <Sun className="text-[#FFD700]" size={18} /> : <Moon className="text-gray-600" size={18} />}
             </button>
-            <Link href="/login">
+            <Link href="/auth/login">
               <button className="px-4 py-2 rounded-lg font-medium transition-all hover:opacity-90" style={{ backgroundColor: '#FFD700', color: '#000000' }}>
                 Se connecter
               </button>
@@ -67,7 +67,7 @@ export function Header() {
               <Link href="/#pricing" className="text-gray-600 dark:text-gray-300 hover:text-[#FFD700] px-4 py-2">
                 Pricing
               </Link>
-              <Link href="/login" className="px-4">
+              <Link href="/auth/login" className="px-4">
                 <button className="w-full px-4 py-2 rounded-lg font-medium hover:opacity-90" style={{ backgroundColor: '#FFD700', color: '#000000' }}>
                   Se connecter
                 </button>
