@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import Realisation from "@/components/layout/realisation";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset } from "@/components/ui/sidebar";
-import { Star, Folder, BarChart3, Crown } from "lucide-react";
+import { Star } from "lucide-react";
 import Link from "next/link";
 
 export default function DashboardsPage() {
