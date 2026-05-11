@@ -36,16 +36,18 @@ export async function updateSession(request: NextRequest) {
   // Protection des routes
   if (!user && request.nextUrl.pathname.startsWith('/bord')) {
     const url = request.nextUrl.clone()
-    url.pathname = '/login'
+    url.pathname = '/auth/login'
     return NextResponse.redirect(url)
   }
 
-  if (user && (request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/register')) {
+/*
+  if (user && (request.nextUrl.pathname === '/auth/login' || request.nextUrl.pathname === '/auth/register')) {
     const url = request.nextUrl.clone()
     url.pathname = ''
     return NextResponse.redirect(url)
   }
 
+*/
 
   return supabaseResponse 
 }

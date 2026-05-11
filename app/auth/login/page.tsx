@@ -122,7 +122,7 @@ export default function LoginPage() {
         <CardFooter className="flex justify-center">
           <p className="text-sm text-gray-600 dark:text-gray-400">
             Pas encore de compte ?{' '}
-            <Link href="/register" className="text-[#FFD700] hover:underline">
+            <Link href="/auth/register" className="text-[#FFD700] hover:underline">
               S'inscrire
             </Link>
           </p>

@@ -1,35 +1,36 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from '@/components/ui/card'
 import { FaGithub } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import { createClient } from '@/lib/supabase/client'
 
 export default function RegisterPage() {
-  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
 
   const supabase = createClient()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
     if (password !== confirmPassword) {
       setError('Les mots de passe ne correspondent pas')
       return
     }
-    
+
     setLoading(true)
     setError('')
+    setSuccess('')
 
     const { error } = await supabase.auth.signUp({
       email,
@@ -42,8 +43,15 @@ export default function RegisterPage() {
     if (error) {
       setError(error.message)
     } else {
-      router.push('/login?message=Vérifiez votre email pour confirmer votre inscription')
+      setSuccess(
+        'Un email de confirmation a été envoyé. Vérifiez votre boîte mail.'
+      )
+
+      setEmail('')
+      setPassword('')
+      setConfirmPassword('')
     }
+
     setLoading(false)
   }
 
@@ -54,6 +62,7 @@ export default function RegisterPage() {
         redirectTo: `${window.location.origin}/auth/callback`,
       },
     })
+
     if (error) setError(error.message)
   }
 
@@ -66,6 +75,7 @@ export default function RegisterPage() {
             Créez votre compte pour accéder aux templates
           </CardDescription>
         </CardHeader>
+
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
@@ -79,6 +89,7 @@ export default function RegisterPage() {
                 required
               />
             </div>
+
             <div className="space-y-2">
               <Label htmlFor="password">Mot de passe</Label>
               <Input
@@ -89,8 +100,12 @@ export default function RegisterPage() {
                 required
               />
             </div>
+
             <div className="space-y-2">
-              <Label htmlFor="confirm-password">Confirmer le mot de passe</Label>
+              <Label htmlFor="confirm-password">
+                Confirmer le mot de passe
+              </Label>
+
               <Input
                 id="confirm-password"
                 type="password"
@@ -99,9 +114,21 @@ export default function RegisterPage() {
                 required
               />
             </div>
-            {error && <p className="text-sm text-red-500">{error}</p>}
-            <Button 
-              type="submit" 
+
+            {error && (
+              <p className="text-sm text-red-500">
+                {error}
+              </p>
+            )}
+
+            {success && (
+              <p className="text-sm text-green-500">
+                {success}
+              </p>
+            )}
+
+            <Button
+              type="submit"
               className="w-full bg-[#FFD700] text-black hover:bg-[#FFD700]/90"
               disabled={loading}
             >
@@ -113,22 +140,26 @@ export default function RegisterPage() {
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-[#FFD700]/20"></div>
             </div>
+
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white dark:bg-black px-2 text-gray-500">Ou continuer avec</span>
+              <span className="bg-white dark:bg-black px-2 text-gray-500">
+                Ou continuer avec
+              </span>
             </div>
           </div>
 
           <div className="space-y-2">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="w-full border-[#FFD700]/30 hover:bg-[#FFD700]/10"
               onClick={() => handleOAuth('github')}
             >
               <FaGithub className="mr-2 h-4 w-4" />
               GitHub
             </Button>
-            <Button 
-              variant="outline" 
+
+            <Button
+              variant="outline"
               className="w-full border-[#FFD700]/30 hover:bg-[#FFD700]/10"
               onClick={() => handleOAuth('google')}
             >
@@ -137,10 +168,14 @@ export default function RegisterPage() {
             </Button>
           </div>
         </CardContent>
+
         <CardFooter className="flex justify-center">
           <p className="text-sm text-gray-600 dark:text-gray-400">
             Déjà un compte ?{' '}
-            <Link href="/login" className="text-[#FFD700] hover:underline">
+            <Link
+              href="/auth/login"
+              className="text-[#FFD700] hover:underline"
+            >
               Se connecter
             </Link>
           </p>
