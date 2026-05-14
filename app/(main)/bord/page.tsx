@@ -1,63 +1,33 @@
-'use client'
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
+import Realisation from '@/components/layout/realisation'
+import { AppSidebar } from '@/components/app-sidebar'
+import { SidebarInset } from '@/components/ui/sidebar'
+import { Star } from 'lucide-react'
+import Link from 'next/link'
 
-import { useEffect, useState } from "react"
-import { createClient } from "@/lib/supabase/client"
-import { useRouter } from "next/navigation"
-import Realisation from "@/components/layout/realisation";
-import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarInset } from "@/components/ui/sidebar";
-import { Star } from "lucide-react";
-import Link from "next/link";
+export default async function DashboardsPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
 
-export default function DashboardsPage() {
-  const [user, setUser] = useState<any>(null)
-  const [profile, setProfile] = useState<any>(null)
-  const [subscription, setSubscription] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-
-  const supabase = createClient()
-  const router = useRouter()
-
-  useEffect(() => {
-    const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-
-      if (!user) {
-        router.push('/auth/login')
-        return
-      }
-
-      setUser(user)
-
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single()
-
-      setProfile(profile)
-
-      const { data: subscription } = await supabase
-        .from('subscriptions')
-        .select('*')
-        .eq('user_id', user.id)
-        .single()
-
-      setSubscription(subscription)
-
-      setLoading(false)
-    }
-
-    getUser()
-  }, [])
-
-  if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">Chargement...</div>
+  if (!user) {
+    redirect('/auth/login')
   }
 
-  if (!user) return null
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', user.id)
+    .single()
 
-  const isPremium = !!subscription
+  const { data: subscription } = await supabase
+    .from('subscriptions')
+    .select('*')
+    .eq('user_id', user.id)
+    .eq('status', 'paid')
+    .maybeSingle()
+
+  const isPremium = subscription?.status === "paid"
   const username = profile?.full_name || user.email
 
   return (

@@ -2,9 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
-    request,
-  })
+  let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -15,10 +13,10 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll()
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
-          supabaseResponse = NextResponse.next({
-            request,
-          })
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value)
+          )
+          supabaseResponse = NextResponse.next({ request })
           cookiesToSet.forEach(({ name, value, options }) =>
             supabaseResponse.cookies.set(name, value, options)
           )
@@ -27,27 +25,26 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  // IMPORTANT: Avoid writing any logic between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
-
+  // ✅ getUser() au lieu de getSession() — vérifie le token côté serveur
   const { data: { user } } = await supabase.auth.getUser()
 
-  // Protection des routes
+  // 🔒 Utilisateur NON connecté qui tente d'accéder au dashboard
   if (!user && request.nextUrl.pathname.startsWith('/bord')) {
     const url = request.nextUrl.clone()
-    url.pathname = '/auth/login'
+    url.pathname = '/auth/register'
     return NextResponse.redirect(url)
   }
 
-/*
-  if (user && (request.nextUrl.pathname === '/auth/login' || request.nextUrl.pathname === '/auth/register')) {
+  // ✅ Utilisateur CONNECTÉ qui tente d'accéder aux pages auth
+  if (
+    user &&
+    (request.nextUrl.pathname.startsWith('/auth/login') ||
+      request.nextUrl.pathname.startsWith('/auth/register'))
+  ) {
     const url = request.nextUrl.clone()
-    url.pathname = ''
+    url.pathname = '/bord'
     return NextResponse.redirect(url)
   }
 
-*/
-
-  return supabaseResponse 
+  return supabaseResponse
 }

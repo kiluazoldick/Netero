@@ -39,7 +39,7 @@ export function Hero() {
             </Link>
             <Link href="/pricing">
               <button className="px-6 py-3 rounded-lg font-medium transition-all border hover:bg-[#FFD700]/10" style={{ borderColor: '#FFD700', color: '#FFD700' }}>
-                Offre unique à 100 000 XAF
+                Offre unique à 1 000 XAF
               </button>
             </Link>
           </div>

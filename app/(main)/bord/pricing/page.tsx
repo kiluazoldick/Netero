@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase/client"
-import { PricingSection } from "@/components/layout/PricingSection"
+import { PricingSection } from "@/components/landing/PricingSection"
 import { AppSidebar } from "@/components/app-sidebar"
 
 export default function PricingPage() {
@@ -36,7 +36,7 @@ export default function PricingPage() {
     if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Chargement...</div>
   }
-  const isPremium = !!subscription
+  const isPremium = user ? subscription?.status === "paid" : false
 
   return (
     <div className="flex">

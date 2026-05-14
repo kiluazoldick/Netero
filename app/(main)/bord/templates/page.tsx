@@ -158,13 +158,11 @@ export default function TemplateCard() {
                   </Link>
 
                   <Link
-                    href={
-                      !user
-                        ? "/login"
-                        : !isPremium
-                        ? "bord/pricing"
-                        : "/bord"
-                    }
+                      href={
+                        isPremium
+                          ? `/bord/templates/${template.slug}`
+                          : "/bord/pricing"
+                      }
                     className="flex-1 bg-[#FFD700] text-black py-2.5 text-center rounded-xl text-sm font-bold"
                   >
                     Obtenir le code

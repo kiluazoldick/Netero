@@ -41,7 +41,7 @@ export function PricingSection() {
               </p>
               
               <div className="text-center mb-6">
-                <span className="text-5xl font-bold text-gray-900 dark:text-white">100 000</span>
+                <span className="text-5xl font-bold text-gray-900 dark:text-white">1 000</span>
                 <span className="text-xl text-gray-600 dark:text-gray-400"> XAF</span>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">Paiement unique · TVA incluse</p>
               </div>

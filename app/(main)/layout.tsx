@@ -35,7 +35,7 @@ export default function MainLayout({
     load()
   }, [])
 
-  const isPremium = !!subscription
+  const isPremium = user ? subscription?.status === "paid" : false
 
   return (
     <SidebarProvider>

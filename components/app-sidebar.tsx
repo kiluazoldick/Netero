@@ -112,17 +112,18 @@ export function AppSidebar({ user, isPremium }: AppSidebarProps) {
             <motion.div className="absolute bottom-full mb-2 left-0 w-full bg-white dark:bg-background border rounded-xl p-2">
               
               {!isPremium && (
-                <Link href="bord/pricing" className="flex gap-2 px-3 py-2 hover:bg-muted">
+                <Link href="/bord/pricing" className="flex gap-2 px-3 py-2 hover:bg-muted">
                   <Sparkles size={16} /> Upgrade
                 </Link>
               )}
-
-              <div
-                onClick={handleLogout}
-                className="flex gap-2 px-3 py-2 text-red-500 hover:bg-red-50 cursor-pointer"
-              >
-                <LogOut size={16} /> Log out
-              </div>
+                <form action="/auth/signout" method="POST">
+                  <button
+                    type="submit"
+                    className="flex gap-2 px-3 py-2 text-red-500 hover:bg-red-50 cursor-pointer w-full"
+                  >
+                    <LogOut size={16} /> Log out
+                  </button>
+                </form>
 
             </motion.div>
           )}
