@@ -35,7 +35,7 @@ export function TemplateCard({ name, description, tags, demoUrl, slug }: Templat
             Live demo
           </button>
         </Link>
-        <Link href={`/dashboard/templates/${slug}`} className="flex-1">
+        <Link href="auth/login" className="flex-1">
           <button className="w-full px-3 py-2 rounded-lg text-sm font-medium transition-all hover:opacity-90" style={{ backgroundColor: '#FFD700', color: '#000000' }}>
             Obtenir le code
           </button>

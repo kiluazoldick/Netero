@@ -35,14 +35,12 @@ export default async function DashboardsPage() {
       <AppSidebar user={user} isPremium={isPremium} />
 
       <SidebarInset>
-        <header className="flex items-center justify-between px-6 py-2 bg-white dark:bg-gray-900 border-b">
+        <header className="flex items-center justify-between px-6 py-2 bg-white dark:bg-black border-b">
           <h1 className="text-lg font-bold">Dashboard</h1>
         </header>
 
         <main className="p-6 flex-1">
-          <div className="relative rounded-2xl px-9 py-8 flex justify-between"
-            style={{ background: "linear-gradient(135deg, #e8e4ff, #fde8f5)" }}
-          >
+          <div className="relative rounded-2xl px-9 py-8 flex justify-between bg-[linear-gradient(135deg,_#e8e4ff,_#fde8f5)] dark:bg-[linear-gradient(135deg,_#1a1a1a,_#2c2c2c)]">
             {isPremium && (
               <div className="absolute top-4 right-4 flex items-center gap-1 bg-yellow-400 text-yellow-900 text-xs px-3 py-1 rounded-full">
                 <Star size={12} fill="currentColor" />

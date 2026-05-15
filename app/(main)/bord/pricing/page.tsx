@@ -39,10 +39,10 @@ export default function PricingPage() {
   const isPremium = user ? subscription?.status === "paid" : false
 
   return (
-    <div className="flex">
+    <div className="flex-1">
       <AppSidebar user={user} isPremium={isPremium} />
 
-      <main>
+      <main className="flex-1 flex items-center justify-center min-h-screen">
         <PricingSection />
       </main>
     </div>
