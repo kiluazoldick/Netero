@@ -9,7 +9,7 @@ program
   .command('install <template>')
   .description('Télécharger un template')
   .action(async (template) => {
-    console.log(`📦 Téléchargement du template "${template}"...`);
+    console.log(`Téléchargement du template "${template}"...`);
     
     // URL du template sur GitHub (dossier templates/)
     const url = `https://github.com/VOTRE_USERNAME/VOTRE_REPO/raw/main/templates/${template}.zip`;
@@ -17,9 +17,9 @@ program
     try {
       // Téléchargement et extraction
       await download(url, path.resolve(process.cwd(), template), { extract: true });
-      console.log(`✅ Template "${template}" installé avec succès dans ./${template}`);
+      console.log(` Template "${template}" installé avec succès dans ./${template}`);
     } catch (error) {
-      console.error(`❌ Erreur : Template "${template}" introuvable ou problème réseau`);
+      console.error(` Erreur : Template "${template}" introuvable ou problème réseau`);
       process.exit(1);
     }
   });
