@@ -130,7 +130,7 @@ export default function TemplateCard() {
                 </Link>
 
                 <Link
-                  href={isLoggedIn ? "/pricing" : "/login"}
+                  href={isLoggedIn ? "/pricing" : "/auth/login"}
                   className="flex-1 bg-[#FFD700] rounded-xl py-2.5 text-center text-sm font-bold text-black text-zinc-900 hover:bg-yellow-300 transition duration-200"
                 >
                   Obtenir le code

@@ -10,7 +10,7 @@ const RealisationList = [
   {
     title: "Stratégie Sociaux",
     category: "Marketing Digital",
-    image: "/social-media-dashboard.png",
+    image: "/images/3.jpg",
   },
   {
     title: "SynergERP",
