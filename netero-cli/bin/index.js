@@ -12,8 +12,8 @@ program
     console.log(`Téléchargement du template "${template}"...`);
     
     // URL du template sur GitHub (dossier templates/)
-    const url = `https://github.com/VOTRE_USERNAME/VOTRE_REPO/raw/main/templates/${template}.zip`;
-    
+    const url = `https://github.com/Fred123333/Templates/raw/main/templates/${template}.zip`;
+    console.log(`🔗 URL tentée : ${url}`); // ← ajoute cette ligne
     try {
       // Téléchargement et extraction
       await download(url, path.resolve(process.cwd(), template), { extract: true });

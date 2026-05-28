@@ -35,7 +35,7 @@ export function PricingSection() {
 
     if (!session) {
       // Pas connecté → redirection vers la page de connexion
-      router.push('/login')
+      router.push('/auth/login')
       return
     }
 

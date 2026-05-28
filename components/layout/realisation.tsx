@@ -6,16 +6,19 @@ const RealisationList = [
     title: "BookShelf",
     category: "E-commerce",
     image: "/bookshlef.png",
+    demoUrl: "https://bookshelf-seven-sooty.vercel.app/",
   },
   {
     title: "Stratégie Sociaux",
     category: "Marketing Digital",
     image: "/images/3.jpg",
+    demoUrl: "https://social-strategy-demo.com",
   },
   {
     title: "SynergERP",
     category: "Automatisation",
     image: "/business-management-software-interface.jpg",
+    demoUrl: "https://synergerp-demo.com",
   },
 ];
 
@@ -49,7 +52,10 @@ export default function Realisation() {
                 </h3>
 
                 <a
-                  href="#"
+
+                  href={project.demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-[#FFD700] font-bold text-[14px] flex items-center gap-3"
                 >
                   Voir le projet <ExternalLink /> 

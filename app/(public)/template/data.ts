@@ -9,7 +9,7 @@ export const templates = [
     category:"E-commerce",
     popular: true,
     slug: "saas-starter",
-    demoUrl: "https://netero.dev/demo/saas-starter",
+    demoUrl: "https://bookshelf-seven-sooty.vercel.app/",
   },
   {
     name: "Stratégie Réseaux Sociaux",
