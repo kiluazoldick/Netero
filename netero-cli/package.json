@@ -1,13 +1,11 @@
 {
   "name": "netero-cli",
-  "version": "1.0.0",
-  "description": "CLI pour télécharger les templates Netero",
+  "version": "1.0.1",
   "bin": {
     "netero-cli": "bin/index.js"
   },
   "dependencies": {
-    "commander": "^11.0.0",
-    "download": "^8.0.0",
-    "fs-extra": "^11.0.0"
+    "commander": "^12.0.0",
+    "adm-zip": "^0.5.12"
   }
 }
