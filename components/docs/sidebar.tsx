@@ -1,6 +1,6 @@
 "use client";
 
-import { docs } from "@/app/docs/docsdb";
+import { docs } from "@/app/(public)/docs/docsdb";
 
 type Props = {
   active: string;

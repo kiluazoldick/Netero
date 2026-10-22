@@ -91,6 +91,55 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=votre_clé_anon
 - [ ] CLI `npx netero`
 - [ ] Admin panel
 
+
+# Netero CLI
+
+CLI officielle de la plateforme **Netero** permettant de télécharger et installer
+des boilerplates (templates) Next.js prêts à l'emploi en une seule commande.
+
+## Installation et utilisation
+
+Aucune installation préalable n'est requise. Exécutez simplement :
+
+```bash
+npx netero-cli install <nom-du-template>
+```
+
+Exemple :
+
+```bash
+npx netero-cli install synerg
+```
+
+Le template est automatiquement téléchargé puis extrait dans un dossier
+portant son nom dans le répertoire courant.
+
+### Prérequis
+
+- Node.js 18 ou supérieur
+
+## Fonctionnement
+
+La CLI récupère l'archive `.zip` du template depuis le dépôt GitHub de Netero,
+puis l'extrait en local :
+
+1. Téléchargement de l'archive via le `fetch` natif de Node.js
+2. Extraction de l'archive avec `adm-zip`
+3. Création d'un dossier prêt à l'emploi
+
+## Stack technique
+
+- **commander** — gestion des commandes de la CLI
+- **adm-zip** — extraction des archives ZIP
+- **fetch natif (Node 18+)** — téléchargement des fichiers
+
+## Deux méthodes de téléchargement
+
+La plateforme Netero propose deux façons d'obtenir un boilerplate :
+
+- **Via la CLI** : `npx netero-cli install <template>` (téléchargement + extraction)
+- **Via le navigateur** : bouton de téléchargement direct du fichier `.zip`
+
 ## 🤝 Contribution
 
 1. Fork le projet
